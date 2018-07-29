@@ -1,0 +1,20 @@
+.navbar{
+    background-color: blue !important;
+   
+}
+.navbar-light,.navbar-brand{
+    color: white;
+}
+
+/* body{
+    background-image: url("http://josephkanon.com/wp-content/uploads/2015/03/NYT-logo.jpg");
+} */
+
+.results h3{
+    background-color: orange;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+   
+}
