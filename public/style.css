@@ -6,15 +6,21 @@
     color: white;
 }
 
-/* body{
+body{
     background-image: url("http://josephkanon.com/wp-content/uploads/2015/03/NYT-logo.jpg");
-} */
+}
 
-.results h3{
-    background-color: orange;
+/*  */
+
+
+
+.card{
+    background-color: blue;
+    color: white;
+    position: relative;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 50px;
-   
+    top:500px;
+    margin: 20px;
 }

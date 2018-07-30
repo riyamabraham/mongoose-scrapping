@@ -22,7 +22,8 @@ var app = express();
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 // Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json()); // Send JSON responses
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
@@ -64,67 +65,29 @@ app.get("/scrape", function(req, res) {
     });
 
     // If we were able to successfully scrape and save an Article, send a message to the client
-    res.send("Scrape Complete");
+    res.send("scrape complete");
   });
+   
 });
 
-// Route for getting all Articles from the db
-app.get("/", function(req, res) {
-  // TODO: Finish the route so it grabs all of the articles
+app.get("/articles", function(req, res) {
+  // Grab every document in the Articles collection
   db.Article.find({})
-  .populate('note')
-  .then(function(dbArticle){
-    res.json(dbArticle);
-  })
-  .catch(function(err) {
-    console.error(err);
-  });
+    .then(function(dbArticle) {
+      // If we were able to successfully find Articles, send them back to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
 });
 
-// Route for grabbing a specific Article by id, populate it with it's note
-app.get("/articles/:id", function(req, res) {
-  // TODO
-  // ====
-  // Finish the route so it finds one article using the req.params.id,
-  // and run the populate method with "note",
-  // then responds with the article with the note included
-  db.Article.findById(req.params.id)
-  .populate('note')
-  .then(function(article) {
-    res.json(article);
-  })
-  .catch(function(err) {
-      res.json('Error: ' + err);
-  });
-});
 
-// Route for saving/updating an Article's associated Note
-app.post("/articles/:id", function(req, res) {
-  var note = new db.Note({ title: req.body.title, body: req.body.body });
-  
-  db.Note.create(note)
-  .then(function(createdNote) {
-    return db.Article.findById(req.params.id).populate('note')
-  })
-  .then(function(article) {
-    article.note = note;
 
-    return db.Article.create(article);
-  })
-  .then(function(newArticle) {
-    res.json(newArticle);
-  })
-  .catch(function(err) {
-    console.error(err);
-  });
 
-  
-  // TODO
-  // ====
-  // save the new note that gets posted to the Notes collection
-  // then find an article from the req.params.id
-  // and update it's "note" property with the _id of the new note
-});
+
+
 
 // Start the server
 app.listen(PORT, function() {
