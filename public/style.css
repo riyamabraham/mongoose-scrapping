@@ -14,13 +14,13 @@ body{
 
 
 
-.card{
-    background-color: blue;
-    color: white;
+#result{
+    /* background-color: blue;
+    color: white; */
     position: relative;
     bottom: 0;
     left: 0;
     right: 0;
-    top:500px;
+    top:540px;
     margin: 20px;
 }
